@@ -131,3 +131,22 @@ def listar_paises(paises):
     print()
     for pais in paises:
       print(mostrar_pais(pais))
+
+# FUNCION DE BUSCAR PAIS #
+
+def buscar_pais(paises):
+  if not paises:
+    print("No hay paises cargados.")
+    return
+  
+  nombre_buscar = validar_texto("Ingrese el nombre (o parte del nombre): ")
+  nombre_buscar = nombre_buscar.lower()
+
+  resultados= [p for p in paises if nombre_buscar in p["nombre"].lower()]
+
+  if resultados:
+    print(f"\n{len(resultados)} resultados encontrados: ")
+    for pais in resultados:
+      print(mostrar_pais(pais))
+  else:
+    print("No se encontro pais con ese nombre")
