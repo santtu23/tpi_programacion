@@ -99,3 +99,25 @@ def validar_flotante(mensaje_1, mensaje_2=None):
       print("ERROR... Por favor ingrese un número válido.")
     except Exception as e:
       print(f"Hubo un error inesperado... Error: {e}.")
+
+# FUNCION DE AGREGAR PAIS #
+
+def agregar_pais(paises):
+  nombre = validar_texto("Ingrese el nombre del pais: ")
+  # FIX: se capitaliza nombre antes de comparar
+  if nombre.capitalize() in [pais["nombre"] for pais in paises]:
+    print("El pais ya existe.")
+  else:
+    print("Nombre del pais ingresado correctamente.")
+    poblacion = validar_entero("Ingrese la poblacion del pais: ", "Poblacion del pais ingresada correctamente.")
+    superficie = validar_flotante("Ingrese la superficie del pais: ", "Superficie del pais ingresada correctamente.")
+    continente = validar_texto("Ingrese el continente del pais: ", "Continente del pais ingresado correctamente.")
+    paises.append({
+      "nombre": nombre.capitalize(),
+      "poblacion": poblacion,
+      "superficie": superficie,
+      "continente": continente.capitalize()
+    })
+    print("Pais agregado correctamente.")
+  
+  return paises
