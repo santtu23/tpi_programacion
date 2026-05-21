@@ -238,3 +238,21 @@ def filtar_continente(paises):
       print(mostrar_pais(pais))
   else: 
     print(f"No se encontraron paises en el continente '{continente.capitalize()}'")
+
+def filtrar_poblacion(paises):
+  print("Ingrese la poblacion del pais: ")
+  minimo = validar_entero("Minimo: ")
+  maximo = validar_entero("Maximo: ")
+
+  if minimo > maximo:
+    print("ERROR el minimo no puede ser mayor al maximo")
+    return
+  
+  resultado = [p for p in paises if minimo <= p["poblacion"] <= maximo]
+
+  if resultado:
+    print(f"\nPaises con poblacion entre {minimo:,} y {maximo:,} ({len(resultado)}):")
+    for pais in resultado:
+      print(mostrar_pais(pais))
+  else:
+    print("No se encontraron paises en ese rango de poblacion")
