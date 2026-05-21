@@ -227,3 +227,14 @@ def filtrar_paises(paises):
       pass
     case _:
       print("Opcion no valida")
+
+def filtar_continente(paises):
+  continente = validar_texto("Ingrese el continente: ")
+  resultados = [p for p in paises if p["continente"].lower() == continente.lower()]
+
+  if resultados:
+    print(f"\nPaises en {continente.capitalize()} ({len(resultados)}): ")
+    for pais in resultados:
+      print(mostrar_pais(pais))
+  else: 
+    print(f"No se encontraron paises en el continente '{continente.capitalize()}'")
