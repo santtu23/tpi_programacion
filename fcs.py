@@ -203,3 +203,27 @@ def eliminar_pais(paises):
     if not encontrado:
       print("Pais no encontrado.")
     return paises
+  
+# FUNCION DE FILTRAR PAIS #
+
+def filtrar_paises(paises):
+  if not paises:
+    print("No hay paises cargados")
+    return
+  
+  print("""\n FILTRAR PAISES
+1.Por continente
+2.Por rango de poblacion
+3.por rango de superficie""")
+  
+  opcion = input("Elija una opcion: ").strip()
+
+  match opcion:
+    case "1":
+      pass
+    case "2":
+      pass
+    case "3":
+      pass
+    case _:
+      print("Opcion no valida")
