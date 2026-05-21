@@ -121,3 +121,13 @@ def agregar_pais(paises):
     print("Pais agregado correctamente.")
   
   return paises
+
+# FUNCION DE LISTAR PAISES #
+
+def listar_paises(paises):
+  if not paises:
+    print("No hay paises que mostrar.")  
+  else:
+    print()
+    for pais in paises:
+      print(mostrar_pais(pais))
