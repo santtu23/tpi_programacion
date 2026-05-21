@@ -256,3 +256,21 @@ def filtrar_poblacion(paises):
       print(mostrar_pais(pais))
   else:
     print("No se encontraron paises en ese rango de poblacion")
+
+def filtrar_superficie(paises):
+  print("Ingrese el continente del pais en km^2: ")
+  minimo = validar_flotante("Minimo: ")
+  maximo = validar_flotante("Maximo: ")
+
+  if minimo > maximo:
+    print("ERROR el minimo no puede ser mayor que el maximo")
+    return
+  
+  resultado = [p for p in paises if minimo <= p["superficie"] <= maximo]
+
+  if resultado:
+    print(f"\nPaíses con superficie entre {minimo:,} y {maximo:,} km^2 ({len(resultado)}):")
+    for pais in resultado:
+          print(mostrar_pais(pais))
+    else:
+        print("No se encontraron países en ese rango de superficie.")
