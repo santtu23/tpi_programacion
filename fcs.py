@@ -274,3 +274,5 @@ def filtrar_superficie(paises):
           print(mostrar_pais(pais))
     else:
         print("No se encontraron países en ese rango de superficie.")
+
+# FUNCION DE ORDENAMIENTO #
