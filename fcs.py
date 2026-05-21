@@ -150,3 +150,37 @@ def buscar_pais(paises):
       print(mostrar_pais(pais))
   else:
     print("No se encontro pais con ese nombre")
+
+# FUNCION DE MODIFICAR PAIS #
+
+def modificar_pais(paises):
+  if not paises:
+    print("No hay paises cargados.")
+  else:
+    nombre_pais = validar_texto("Ingrese el pais a modificar: ")
+    encontrado = False
+    for pais in paises:
+      if nombre_pais.capitalize() == pais["nombre"]:
+        print(f"Pais encontrado: {mostrar_pais(pais)}")
+        encontrado = True
+        while True:
+          opcion = input(f""" -- ELIJA UNA OPCIÓN --
+1. Modificar población de {nombre_pais}
+2. Modificar superficie de {nombre_pais}
+3. Salir
+- """)
+          match opcion:
+            case "1":
+              pais['poblacion'] = validar_entero(f'Ingrese la nueva poblacion para {nombre_pais}: ', "Población modificada exitosamente.")
+              break
+            case "2":
+              pais['superficie'] = validar_flotante(f'Ingrese la nueva superficie para {nombre_pais}: ', "Superficie modificada exitosamente.")
+              break
+            case "3":
+              print("Volviendo al menú principal...")
+              break
+            case _:
+              print("ERROR... Comando inválido")
+    if not encontrado:
+      print("Pais no encontrado.")
+    return paises
