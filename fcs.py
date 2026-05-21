@@ -184,3 +184,22 @@ def modificar_pais(paises):
     if not encontrado:
       print("Pais no encontrado.")
     return paises
+
+# FUNCION DE ELIMINAR PAIS #
+
+def eliminar_pais(paises):
+  if not paises:
+    print("No hay paises cargados.")
+  else:
+    nombre_pais = validar_texto("Ingrese el pais a eliminar: ")
+    encontrado = False
+    # FIX: se itera sobre una copia para evitar problemas al eliminar
+    for pais in paises[:]:
+      if nombre_pais.capitalize() == pais["nombre"]:
+        print(f"Pais encontrado: {mostrar_pais(pais)}")
+        encontrado = True
+        paises.remove(pais)
+        print("Pais eliminado")
+    if not encontrado:
+      print("Pais no encontrado.")
+    return paises
