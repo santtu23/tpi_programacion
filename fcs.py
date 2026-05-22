@@ -276,3 +276,42 @@ def filtrar_superficie(paises):
         print("No se encontraron países en ese rango de superficie.")
 
 # FUNCION DE ORDENAMIENTO #
+
+def ordena_paises(paises):
+  orden = input("""Ingrese como desea ver los paises: 
+              1 - Nombre
+              2 - Poblacion
+              3 - Superficie
+              """).strip().lower()
+  match orden:
+
+    case "1" | "nombre":
+      nombres = sorted([pais["nombre"] for pais in paises])
+      for nombre in nombres:
+        print(nombre)
+
+    case "2" | "poblacion":
+      poblaciones = sorted([pais["poblacion"] for pais in paises])
+      for poblacion in poblaciones:
+        print(poblacion)
+
+    case "3" | "superficie":
+
+      orden_dir = input("Ascendente o Descendente (a/d): ").strip().lower()
+
+      if orden_dir == "a" or orden_dir == "ascendente":
+        superficies = sorted([pais["superficie"] for pais in paises])
+        for superficie in superficies:
+          print(superficie)
+
+      elif orden_dir == "d" or orden_dir == "descendente":
+        superficies = sorted([pais["superficie"] for pais in paises],reverse=True)
+        for superficiee in superficies:
+          print(superficiee)
+
+      else:
+        print("Opcion incorrecta...")
+        return
+      
+    case _:
+      print("Opcion incorrecta...")
