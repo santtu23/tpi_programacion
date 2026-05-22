@@ -10,7 +10,7 @@ def cargar_csv(ruta_archivo):
   paises = []
 
   if not os.path.exists(ruta_archivo):
-    print(f"ERROR el archivo '{ruta_archivo}' no existe")
+    print(f"Archivo '{ruta_archivo}' no encontrado, se usaran datos por defecto.")
     return paises
   
   try:
@@ -54,7 +54,20 @@ def cargar_csv(ruta_archivo):
   print(f"{len(paises)} paises cargados correctamente '{ruta_archivo}'")
   return paises
 
-# ---------
+# GUARDAR CSV #
+
+def guardar_csv (paises, ruta_archivo):
+  try:
+    with open (ruta_archivo, "w", newline="", encoding="utf-8") as archivo:
+      campos = ["nombre", "poblacion", "superficie", "continente"]
+      escritor = csv.DictWriter(archivo, fieldnames=campos)
+      escritor.writeheader()
+      escritor.writerow(paises)
+      print(f"Datos guardados correctamente en '{ruta_archivo}'")
+  except Exception as e:
+    print(f"ERROR no se pudo guardar el archivo {e}")
+
+# --------- #
 
 def validar_texto(mensaje_1, mensaje_2=None):
     while True:
@@ -220,11 +233,11 @@ def filtrar_paises(paises):
 
   match opcion:
     case "1":
-      pass
+      filtar_continente(paises)
     case "2":
-      pass
+      filtrar_poblacion(paises)
     case "3":
-      pass
+      filtrar_superficie(paises)
     case _:
       print("Opcion no valida")
 
@@ -272,8 +285,8 @@ def filtrar_superficie(paises):
     print(f"\nPaíses con superficie entre {minimo:,} y {maximo:,} km^2 ({len(resultado)}):")
     for pais in resultado:
           print(mostrar_pais(pais))
-    else:
-        print("No se encontraron países en ese rango de superficie.")
+  else:
+      print("No se encontraron países en ese rango de superficie.")
 
 # FUNCION DE ORDENAMIENTO #
 
