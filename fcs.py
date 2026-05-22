@@ -56,16 +56,17 @@ def cargar_csv(ruta_archivo):
 
 # GUARDAR CSV #
 
-def guardar_csv (paises, ruta_archivo):
+def guardar_csv(paises, ruta_archivo):
   try:
-    with open (ruta_archivo, "w", newline="", encoding="utf-8") as archivo:
+    with open(ruta_archivo, "w", newline="", encoding="utf-8") as archivo:
       campos = ["nombre", "poblacion", "superficie", "continente"]
       escritor = csv.DictWriter(archivo, fieldnames=campos)
       escritor.writeheader()
-      escritor.writerow(paises)
-      print(f"Datos guardados correctamente en '{ruta_archivo}'")
+      for pais in paises:
+          escritor.writerow(pais)
+    print(f"Datos guardados correctamente en '{ruta_archivo}'")
   except Exception as e:
-    print(f"ERROR no se pudo guardar el archivo {e}")
+    print(f"ERROR no se pudo guardar el archivo: {e}")
 
 # --------- #
 
