@@ -42,11 +42,11 @@ while True:
         case "5":
             paises = eliminar_pais(paises)
         case "6":
-            filtral_paises(paises)
+            filtrar_paises(paises)
         case "7":
             ordena_paises(paises)
         case "8":
-            mostar_estadisticas(paises)
+            mostrar_estadisticas(paises)
         case "9":
             print("Saliendo del programa")
             break

@@ -315,3 +315,43 @@ def ordena_paises(paises):
       
     case _:
       print("Opcion incorrecta...")
+
+# FUNCION DE MOSTRAR ESTADISTICAS
+
+def mostrar_estadisticas(paises):
+    if not paises:
+        print("No hay paises cargados.")
+        return
+
+    mayor_pob = paises[0]
+    menor_pob = paises[0]
+    for pais in paises:
+        if pais["poblacion"] > mayor_pob["poblacion"]:
+            mayor_pob = pais
+        if pais["poblacion"] < menor_pob["poblacion"]:
+            menor_pob = pais
+
+    total_poblacion = 0
+    total_superficie = 0
+    for pais in paises:
+        total_poblacion += pais["poblacion"]
+        total_superficie += pais["superficie"]
+    
+    promedio_poblacion = total_poblacion / len(paises)
+    promedio_superficie = total_superficie / len(paises)
+
+    continentes = {}
+    for pais in paises:
+        continente = pais["continente"]
+        if continente in continentes:
+            continentes[continente] += 1
+        else:
+            continentes[continente] = 1
+
+    print(f"\nPais con mayor poblacion: {mayor_pob['nombre']} ({mayor_pob['poblacion']:,})")
+    print(f"Pais con menor poblacion: {menor_pob['nombre']} ({menor_pob['poblacion']:,})")
+    print(f"Promedio de poblacion: {promedio_poblacion:,.2f}")
+    print(f"Promedio de superficie: {promedio_superficie:,.2f} km^2")
+    print("\nCantidad de paises por continente:")
+    for continente, cantidad in continentes.items():
+        print(f"  {continente}: {cantidad}")
