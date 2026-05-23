@@ -15,7 +15,6 @@ if not paises:
         {"nombre": "Alemania",  "poblacion": 83149300,  "superficie": 357022.0,  "continente": "Europa"},
 ]
 
-
 #Menu principal
 
 while True:
@@ -35,21 +34,21 @@ while True:
 
     match opcion:
         case "1":
-            paises = agregar_pais(paises)
+            paises = agregar_pais(paises) or paises
         case "2":
-            listar_paises(paises)
+            listar_paises(paises) or paises
         case "3":
-            buscar_pais(paises)
+            buscar_pais(paises) or paises
         case "4":
-            paises = modificar_pais(paises)
+            paises = modificar_pais(paises) or paises
         case "5":
-            paises = eliminar_pais(paises)
+            paises = eliminar_pais(paises) or paises
         case "6":
-            filtrar_paises(paises)
+            filtrar_paises(paises) or paises
         case "7":
-            ordena_paises(paises)
+            ordena_paises(paises) or paises
         case "8":
-            mostrar_estadisticas(paises)
+            mostrar_estadisticas(paises) or paises
         case "9":
             print("Saliendo del programa")
             guardar_csv(paises, ARCHIVO_CSV)
