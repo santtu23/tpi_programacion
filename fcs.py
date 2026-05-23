@@ -6,8 +6,7 @@ def mostrar_pais(pais):
 
 # CARGAR CSV #
 
-def cargar_csv(ruta_archivo):
-  paises = []
+def cargar_csv(ruta_archivo, paises):
 
   if not os.path.exists(ruta_archivo):
     print(f"Archivo '{ruta_archivo}' no encontrado, se usaran datos por defecto.")
@@ -114,27 +113,66 @@ def validar_flotante(mensaje_1, mensaje_2=None):
     except Exception as e:
       print(f"Hubo un error inesperado... Error: {e}.")
 
+# FUNCION DE VALIDAR CONTINENTES #
+
+def validar_continente(mensaje1, mensaje2 = None):
+    continentes_validos = ["america", "asia", "europa", "africa", "oceania"]
+    while True:
+        try:
+            continente = validar_texto(mensaje1).lower()
+            if continente not in continentes_validos:
+                print(f"ERROR! Continente no válido. Los continentes válidos son: {', '.join(continentes_validos)}")
+                continue
+            if mensaje2 != None:
+                print(mensaje2)
+            return continente.capitalize()
+        except Exception as e:
+            print(f"Ha ocurrido un error inesperado: {e}")
+
 # FUNCION DE AGREGAR PAIS #
 
 def agregar_pais(paises):
-  nombre = validar_texto("Ingrese el nombre del pais: ")
-  # FIX: se capitaliza nombre antes de comparar
-  if nombre.capitalize() in [pais["nombre"] for pais in paises]:
-    print("El pais ya existe.")
-  else:
-    print("Nombre del pais ingresado correctamente.")
-    poblacion = validar_entero("Ingrese la poblacion del pais: ", "Poblacion del pais ingresada correctamente.")
-    superficie = validar_flotante("Ingrese la superficie del pais: ", "Superficie del pais ingresada correctamente.")
-    continente = validar_texto("Ingrese el continente del pais: ", "Continente del pais ingresado correctamente.")
-    paises.append({
+  while True:
+
+    nombre = validar_texto("Ingrese el nombre del pais: ")
+    if len(nombre) < 4:
+      print("ERROR... El nombre debe tener al menos 4 letras")
+    elif nombre.capitalize() in [pais["nombre"] for pais in paises]:
+      print("El pais ya existe.")
+      return paises
+    else:
+      print("Nombre del pais ingresado correctamente.")
+      break
+
+  while True:
+    poblacion = validar_entero("Ingrese la poblacion del pais: ")
+    if poblacion <= 500:
+      print("ERROR... La poblacion debe ser mayor a 500.")
+    else:
+      print("Poblacion del pais ingresada correctamente")
+      break
+
+  while True:
+    superficie = validar_flotante("Ingrese la superficie del pais (km²): ")
+    if superficie < 0.44:
+      print("ERROR... La superficie debe ser mayor a 0.44km².")
+    else:
+      print("Superficie ingresada correctamente")
+      break
+
+  continente = validar_continente("Ingrese el continente del pais:", "Continente ingresado correctamente")
+
+  paises.append({
       "nombre": nombre.capitalize(),
       "poblacion": poblacion,
       "superficie": superficie,
       "continente": continente.capitalize()
     })
-    print("Pais agregado correctamente.")
+  print("Pais agregado correctamente.")
   
-  return paises
+
+
+                        
 
 # FUNCION DE LISTAR PAISES #
 

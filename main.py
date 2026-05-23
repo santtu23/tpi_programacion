@@ -3,7 +3,8 @@ from fcs import *
 #Carga del csv
 
 ARCHIVO_CSV ="paises.csv"
-paises = cargar_csv(ARCHIVO_CSV)
+paises =[]
+paises = cargar_csv(ARCHIVO_CSV, paises)
 
 # Si no hay csv o esta vacio
 if not paises:
@@ -14,7 +15,6 @@ if not paises:
         {"nombre": "Alemania",  "poblacion": 83149300,  "superficie": 357022.0,  "continente": "Europa"},
 ]
 
-guardar_csv(paises, ARCHIVO_CSV)
 
 #Menu principal
 
@@ -52,6 +52,7 @@ while True:
             mostrar_estadisticas(paises)
         case "9":
             print("Saliendo del programa")
+            guardar_csv(paises, ARCHIVO_CSV)
             break
         case _:
             print("Opcion no valida")
