@@ -169,10 +169,7 @@ def agregar_pais(paises):
       "continente": continente.capitalize()
     })
   print("Pais agregado correctamente.")
-  
-
-
-                        
+  return paises
 
 # FUNCION DE LISTAR PAISES #
 
