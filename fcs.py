@@ -1,15 +1,27 @@
 import csv
 import os
 
+# COLORES ANSI #
+ROJO     = "\033[91m"
+VERDE    = "\033[92m"
+AMARILLO = "\033[93m"
+CIAN     = "\033[96m"
+BLANCO   = "\033[97m"
+RESET    = "\033[0m"
+NEGRITA  = "\033[1m"
+
 def mostrar_pais(pais):
-  return f"{pais['nombre']} - Poblacion: {pais['poblacion']} - Superficie: {pais['superficie']} - Continente: {pais['continente']}"
+  return (f"{NEGRITA}{CIAN}{pais['nombre']}{RESET} - "
+          f"Poblacion: {BLANCO}{pais['poblacion']}{RESET} - "
+          f"Superficie: {BLANCO}{pais['superficie']}{RESET} - "
+          f"Continente: {AMARILLO}{pais['continente']}{RESET}")
 
 # CARGAR CSV #
 
 def cargar_csv(ruta_archivo, paises):
 
   if not os.path.exists(ruta_archivo):
-    print(f"Archivo '{ruta_archivo}' no encontrado, se usaran datos por defecto.")
+    print(f"{AMARILLO}Archivo '{ruta_archivo}' no encontrado, se usaran datos por defecto.{RESET}")
     return paises
   
   try:
@@ -20,7 +32,7 @@ def cargar_csv(ruta_archivo, paises):
 
       columnas_requeridas = {"nombre", "poblacion", "superficie", "continente"}
       if not columnas_requeridas.issubset(set(lector.fieldnames or [])):
-        print(f"ERROR el csv debe tener las columnas {columnas_requeridas}")
+        print(f"{ROJO}ERROR el csv debe tener las columnas {columnas_requeridas}{RESET}")
         return paises
       
       for numero_fila, fila in enumerate(lector, start=2):
@@ -31,10 +43,10 @@ def cargar_csv(ruta_archivo, paises):
           superficie = float(fila["superficie"].strip())
 
           if not nombre or not continente:
-            print(f"Aviso fila {numero_fila} ignorada: campos vacios")
+            print(f"{AMARILLO}Aviso fila {numero_fila} ignorada: campos vacios{RESET}")
             continue
           if poblacion < 0 or superficie < 0:
-            print(f"Aviso fila{numero_fila} ignorada: valores negativos")
+            print(f"{AMARILLO}Aviso fila{numero_fila} ignorada: valores negativos{RESET}")
             continue
 
           paises.append({
@@ -45,12 +57,12 @@ def cargar_csv(ruta_archivo, paises):
           })
 
         except ValueError:
-          print(f"Aviso fila {numero_fila} ignorada: poblacion o superficie incoreccta")
+          print(f"{AMARILLO}Aviso fila {numero_fila} ignorada: poblacion o superficie incoreccta{RESET}")
   
   except Exception as e:
-    print(f"ERROR no se pudo leer el archivo {e}")
+    print(f"{ROJO}ERROR no se pudo leer el archivo {e}{RESET}")
 
-  print(f"{len(paises)} paises cargados correctamente '{ruta_archivo}'")
+  print(f"{VERDE}{len(paises)} paises cargados correctamente '{ruta_archivo}'{RESET}")
   return paises
 
 # GUARDAR CSV #
@@ -89,10 +101,9 @@ def guardar_csv(paises, ruta_archivo):
           str(pais["continente"])
         ))
 
-    print(f"Datos guardados correctamente en '{ruta_archivo}'")
+    print(f"{VERDE}Datos guardados correctamente en '{ruta_archivo}'{RESET}")
   except Exception as e:
-    print(f"ERROR no se pudo guardar el archivo: {e}")
-
+    print(f"{ROJO}ERROR no se pudo guardar el archivo: {e}{RESET}")
 
 # --------- #
 
@@ -103,42 +114,42 @@ def validar_texto(mensaje_1, mensaje_2=None):
         # FIX: se permite espacio para nombres como "Nueva Zelanda"
         if texto.replace(" ", "").isalpha():
           if mensaje_2 != None:
-            print(mensaje_2)
+            print(f"{VERDE}{mensaje_2}{RESET}")
           return texto
         else:
-          print("ERROR... El texto solo puede contener letras.")
+          print(f"{ROJO}ERROR... El texto solo puede contener letras.{RESET}")
       except Exception as e:
-        print(f"Hubo un error inesperado... Error: {e}.")
+        print(f"{ROJO}Hubo un error inesperado... Error: {e}.{RESET}")
 
 def validar_entero(mensaje_1, mensaje_2=None):
   while True:
     try:
       numero = int(input(mensaje_1))
       if numero < 0:
-        print("ERROR... No se permiten números negativos.")
+        print(f"{ROJO}ERROR... No se permiten números negativos.{RESET}")
         continue
       if mensaje_2 != None:
-        print(mensaje_2)
+        print(f"{VERDE}{mensaje_2}{RESET}")
       return numero
     except ValueError:
-      print("ERROR... Por favor ingrese un número entero.")
+      print(f"{ROJO}ERROR... Por favor ingrese un número entero.{RESET}")
     except Exception as e:
-      print(f"Hubo un error inesperado... Error: {e}.")
+      print(f"{ROJO}Hubo un error inesperado... Error: {e}.{RESET}")
 
 def validar_flotante(mensaje_1, mensaje_2=None):
   while True:
     try:
       numero = float(input(mensaje_1))
       if numero < 0:
-        print("ERROR... No se permiten números negativos.")
+        print(f"{ROJO}ERROR... No se permiten números negativos.{RESET}")
         continue
       if mensaje_2 != None:
-        print(mensaje_2)
+        print(f"{VERDE}{mensaje_2}{RESET}")
       return numero
     except ValueError:
-      print("ERROR... Por favor ingrese un número válido.")
+      print(f"{ROJO}ERROR... Por favor ingrese un número válido.{RESET}")
     except Exception as e:
-      print(f"Hubo un error inesperado... Error: {e}.")
+      print(f"{ROJO}Hubo un error inesperado... Error: {e}.{RESET}")
 
 # FUNCION DE VALIDAR CONTINENTES #
 
@@ -148,13 +159,13 @@ def validar_continente(mensaje1, mensaje2 = None):
         try:
             continente = validar_texto(mensaje1).lower()
             if continente not in continentes_validos:
-                print(f"ERROR! Continente no válido. Los continentes válidos son: {', '.join(continentes_validos)}")
+                print(f"{ROJO}ERROR! Continente no válido. Los continentes válidos son: {', '.join(continentes_validos)}{RESET}")
                 continue
             if mensaje2 != None:
-                print(mensaje2)
+                print(f"{VERDE}{mensaje2}{RESET}")
             return continente.capitalize()
         except Exception as e:
-            print(f"Ha ocurrido un error inesperado: {e}")
+            print(f"{ROJO}Ha ocurrido un error inesperado: {e}{RESET}")
 
 # FUNCION DE AGREGAR PAIS #
 
@@ -163,28 +174,28 @@ def agregar_pais(paises):
 
     nombre = validar_texto("Ingrese el nombre del pais: ")
     if len(nombre) < 4:
-      print("ERROR... El nombre debe tener al menos 4 letras")
+      print(f"{ROJO}ERROR... El nombre debe tener al menos 4 letras{RESET}")
     elif nombre.capitalize() in [pais["nombre"] for pais in paises]:
-      print("El pais ya existe.")
+      print(f"{AMARILLO}El pais ya existe.{RESET}")
       return paises
     else:
-      print("Nombre del pais ingresado correctamente.")
+      print(f"{VERDE}Nombre del pais ingresado correctamente.{RESET}")
       break
 
   while True:
     poblacion = validar_entero("Ingrese la poblacion del pais: ")
     if poblacion <= 500:
-      print("ERROR... La poblacion debe ser mayor a 500.")
+      print(f"{ROJO}ERROR... La poblacion debe ser mayor a 500.{RESET}")
     else:
-      print("Poblacion del pais ingresada correctamente")
+      print(f"{VERDE}Poblacion del pais ingresada correctamente{RESET}")
       break
 
   while True:
     superficie = validar_flotante("Ingrese la superficie del pais (km²): ")
     if superficie < 0.44:
-      print("ERROR... La superficie debe ser mayor a 0.44km².")
+      print(f"{ROJO}ERROR... La superficie debe ser mayor a 0.44km².{RESET}")
     else:
-      print("Superficie ingresada correctamente")
+      print(f"{VERDE}Superficie ingresada correctamente{RESET}")
       break
 
   continente = validar_continente("Ingrese el continente del pais:", "Continente ingresado correctamente")
@@ -195,14 +206,14 @@ def agregar_pais(paises):
       "superficie": superficie,
       "continente": continente.capitalize()
     })
-  print("Pais agregado correctamente.")
+  print(f"{VERDE}Pais agregado correctamente.{RESET}")
   return paises
 
 # FUNCION DE LISTAR PAISES #
 
 def listar_paises(paises):
   if not paises:
-    print("No hay paises que mostrar.")  
+    print(f"{AMARILLO}No hay paises que mostrar.{RESET}")  
   else:
     print()
     for pais in paises:
@@ -212,7 +223,7 @@ def listar_paises(paises):
 
 def buscar_pais(paises):
   if not paises:
-    print("No hay paises cargados.")
+    print(f"{AMARILLO}No hay paises cargados.{RESET}")
     return
   
   nombre_buscar = validar_texto("Ingrese el nombre (o parte del nombre): ")
@@ -221,26 +232,26 @@ def buscar_pais(paises):
   resultados= [p for p in paises if nombre_buscar in p["nombre"].lower()]
 
   if resultados:
-    print(f"\n{len(resultados)} resultados encontrados: ")
+    print(f"\n{VERDE}{len(resultados)} resultados encontrados: {RESET}")
     for pais in resultados:
       print(mostrar_pais(pais))
   else:
-    print("No se encontro pais con ese nombre")
+    print(f"{AMARILLO}No se encontro pais con ese nombre{RESET}")
 
 # FUNCION DE MODIFICAR PAIS #
 
 def modificar_pais(paises):
   if not paises:
-    print("No hay paises cargados.")
+    print(f"{AMARILLO}No hay paises cargados.{RESET}")
   else:
     nombre_pais = validar_texto("Ingrese el pais a modificar: ")
     encontrado = False
     for pais in paises:
       if nombre_pais.capitalize() == pais["nombre"]:
-        print(f"Pais encontrado: {mostrar_pais(pais)}")
+        print(f"{VERDE}Pais encontrado:{RESET} {mostrar_pais(pais)}")
         encontrado = True
         while True:
-          opcion = input(f""" -- ELIJA UNA OPCIÓN --
+          opcion = input(f"""{CIAN} -- ELIJA UNA OPCIÓN --{RESET}
 1. Modificar población de {nombre_pais}
 2. Modificar superficie de {nombre_pais}
 3. Salir
@@ -253,41 +264,41 @@ def modificar_pais(paises):
               pais['superficie'] = validar_flotante(f'Ingrese la nueva superficie para {nombre_pais}: ', "Superficie modificada exitosamente.")
               break
             case "3":
-              print("Volviendo al menú principal...")
+              print(f"{CIAN}Volviendo al menú principal...{RESET}")
               break
             case _:
-              print("ERROR... Comando inválido")
+              print(f"{ROJO}ERROR... Comando inválido{RESET}")
     if not encontrado:
-      print("Pais no encontrado.")
+      print(f"{AMARILLO}Pais no encontrado.{RESET}")
     return paises
 
 # FUNCION DE ELIMINAR PAIS #
 
 def eliminar_pais(paises):
   if not paises:
-    print("No hay paises cargados.")
+    print(f"{AMARILLO}No hay paises cargados.{RESET}")
   else:
     nombre_pais = validar_texto("Ingrese el pais a eliminar: ")
     encontrado = False
     # FIX: se itera sobre una copia para evitar problemas al eliminar
     for pais in paises[:]:
       if nombre_pais.capitalize() == pais["nombre"]:
-        print(f"Pais encontrado: {mostrar_pais(pais)}")
+        print(f"{VERDE}Pais encontrado:{RESET} {mostrar_pais(pais)}")
         encontrado = True
         paises.remove(pais)
-        print("Pais eliminado")
+        print(f"{VERDE}Pais eliminado{RESET}")
     if not encontrado:
-      print("Pais no encontrado.")
+      print(f"{AMARILLO}Pais no encontrado.{RESET}")
     return paises
   
 # FUNCION DE FILTRAR PAIS #
 
 def filtrar_paises(paises):
   if not paises:
-    print("No hay paises cargados")
+    print(f"{AMARILLO}No hay paises cargados{RESET}")
     return
   
-  print("""\n FILTRAR PAISES
+  print(f"""\n{NEGRITA}{CIAN} FILTRAR PAISES{RESET}
 1.Por continente
 2.Por rango de poblacion
 3.por rango de superficie""")
@@ -302,18 +313,18 @@ def filtrar_paises(paises):
     case "3":
       filtrar_superficie(paises)
     case _:
-      print("Opcion no valida")
+      print(f"{ROJO}Opcion no valida{RESET}")
 
 def filtar_continente(paises):
   continente = validar_texto("Ingrese el continente: ")
   resultados = [p for p in paises if p["continente"].lower() == continente.lower()]
 
   if resultados:
-    print(f"\nPaises en {continente.capitalize()} ({len(resultados)}): ")
+    print(f"\n{VERDE}Paises en {continente.capitalize()} ({len(resultados)}): {RESET}")
     for pais in resultados:
       print(mostrar_pais(pais))
   else: 
-    print(f"No se encontraron paises en el continente '{continente.capitalize()}'")
+    print(f"{AMARILLO}No se encontraron paises en el continente '{continente.capitalize()}'{RESET}")
 
 def filtrar_poblacion(paises):
   print("Ingrese la poblacion del pais: ")
@@ -321,17 +332,17 @@ def filtrar_poblacion(paises):
   maximo = validar_entero("Maximo: ")
 
   if minimo > maximo:
-    print("ERROR el minimo no puede ser mayor al maximo")
+    print(f"{ROJO}ERROR el minimo no puede ser mayor al maximo{RESET}")
     return
   
   resultado = [p for p in paises if minimo <= p["poblacion"] <= maximo]
 
   if resultado:
-    print(f"\nPaises con poblacion entre {minimo:,} y {maximo:,} ({len(resultado)}):")
+    print(f"\n{VERDE}Paises con poblacion entre {minimo:,} y {maximo:,} ({len(resultado)}):{RESET}")
     for pais in resultado:
       print(mostrar_pais(pais))
   else:
-    print("No se encontraron paises en ese rango de poblacion")
+    print(f"{AMARILLO}No se encontraron paises en ese rango de poblacion{RESET}")
 
 def filtrar_superficie(paises):
   print("Ingrese el continente del pais en km^2: ")
@@ -339,25 +350,25 @@ def filtrar_superficie(paises):
   maximo = validar_flotante("Maximo: ")
 
   if minimo > maximo:
-    print("ERROR el minimo no puede ser mayor que el maximo")
+    print(f"{ROJO}ERROR el minimo no puede ser mayor que el maximo{RESET}")
     return
   
   resultado = [p for p in paises if minimo <= p["superficie"] <= maximo]
 
   if resultado:
-    print(f"\nPaíses con superficie entre {minimo:,} y {maximo:,} km^2 ({len(resultado)}):")
+    print(f"\n{VERDE}Países con superficie entre {minimo:,} y {maximo:,} km^2 ({len(resultado)}):{RESET}")
     for pais in resultado:
           print(mostrar_pais(pais))
   else:
-      print("No se encontraron países en ese rango de superficie.")
+      print(f"{AMARILLO}No se encontraron países en ese rango de superficie.{RESET}")
 
 # FUNCION DE ORDENAMIENTO #
 
 def ordena_paises(paises):
-  orden = input("""Ingrese como desea ver los paises: 
-              1 - Nombre
-              2 - Poblacion
-              3 - Superficie
+  orden = input(f"""Ingrese como desea ver los paises: 
+              {CIAN}1{RESET} - Nombre
+              {CIAN}2{RESET} - Poblacion
+              {CIAN}3{RESET} - Superficie
               """).strip().lower()
   match orden:
 
@@ -386,17 +397,17 @@ def ordena_paises(paises):
           print(superficiee)
 
       else:
-        print("Opcion incorrecta...")
+        print(f"{ROJO}Opcion incorrecta...{RESET}")
         return
       
     case _:
-      print("Opcion incorrecta...")
+      print(f"{ROJO}Opcion incorrecta...{RESET}")
 
 # FUNCION DE MOSTRAR ESTADISTICAS
 
 def mostrar_estadisticas(paises):
     if not paises:
-        print("No hay paises cargados.")
+        print(f"{AMARILLO}No hay paises cargados.{RESET}")
         return
 
     mayor_pob = paises[0]
@@ -424,10 +435,10 @@ def mostrar_estadisticas(paises):
         else:
             continentes[continente] = 1
 
-    print(f"\nPais con mayor poblacion: {mayor_pob['nombre']} ({mayor_pob['poblacion']:,})")
-    print(f"Pais con menor poblacion: {menor_pob['nombre']} ({menor_pob['poblacion']:,})")
-    print(f"Promedio de poblacion: {promedio_poblacion:,.2f}")
-    print(f"Promedio de superficie: {promedio_superficie:,.2f} km^2")
-    print("\nCantidad de paises por continente:")
+    print(f"\n{NEGRITA}Pais con mayor poblacion:{RESET} {CIAN}{mayor_pob['nombre']}{RESET} ({BLANCO}{mayor_pob['poblacion']:,}{RESET})")
+    print(f"{NEGRITA}Pais con menor poblacion:{RESET} {CIAN}{menor_pob['nombre']}{RESET} ({BLANCO}{menor_pob['poblacion']:,}{RESET})")
+    print(f"{NEGRITA}Promedio de poblacion:{RESET} {BLANCO}{promedio_poblacion:,.2f}{RESET}")
+    print(f"{NEGRITA}Promedio de superficie:{RESET} {BLANCO}{promedio_superficie:,.2f} km^2{RESET}")
+    print(f"\n{NEGRITA}Cantidad de paises por continente:{RESET}")
     for continente, cantidad in continentes.items():
-        print(f"  {continente}: {cantidad}")
+        print(f"  {AMARILLO}{continente}{RESET}: {cantidad}")
