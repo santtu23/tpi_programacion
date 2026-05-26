@@ -18,7 +18,9 @@ def mostrar_pais(pais):
 
 # CARGAR CSV #
 
-def cargar_csv(ruta_archivo, paises):
+def cargar_csv(ruta_archivo, paises=None):
+  if paises is None:
+    paises = []
 
   if not os.path.exists(ruta_archivo):
     print(f"{AMARILLO}Archivo '{ruta_archivo}' no encontrado, se usaran datos por defecto.{RESET}")
