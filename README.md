@@ -102,9 +102,13 @@ Detalle de cada opción
 El archivo paises.csv tiene la siguiente estructura:
 
 nombre,poblacion,superficie,continente
+
 Argentina,45376763,2780400.0,America
+
 Japon,125800000,377975.0,Asia
+
 Brasil,213993437,8515767.0,America
+
 Alemania,83149300,357022.0,Europa
 
 👨‍💻 Validaciones implementadas

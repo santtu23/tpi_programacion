@@ -59,13 +59,40 @@ def guardar_csv(paises, ruta_archivo):
   try:
     with open(ruta_archivo, "w", newline="", encoding="utf-8") as archivo:
       campos = ["nombre", "poblacion", "superficie", "continente"]
-      escritor = csv.DictWriter(archivo, fieldnames=campos)
-      escritor.writeheader()
+
+      # Calculamos el ancho máximo de cada columna
+      anchos = {campo: len(campo) for campo in campos}
       for pais in paises:
-          escritor.writerow(pais)
+        anchos["nombre"]     = max(anchos["nombre"],     len(str(pais["nombre"])))
+        anchos["poblacion"]  = max(anchos["poblacion"],  len(str(pais["poblacion"])))
+        anchos["superficie"] = max(anchos["superficie"], len(str(pais["superficie"])))
+        anchos["continente"] = max(anchos["continente"], len(str(pais["continente"])))
+
+      def formatear_fila(nombre, poblacion, superficie, continente):
+        return (
+          f"{nombre:<{anchos['nombre']}} , "
+          f"{poblacion:<{anchos['poblacion']}} , "
+          f"{superficie:<{anchos['superficie']}} , "
+          f"{continente:<{anchos['continente']}}\n"
+        )
+
+      archivo.write(formatear_fila("nombre", "poblacion", "superficie", "continente"))
+
+      separador = "-" * (sum(anchos.values()) + 9) + "\n"
+      archivo.write(separador)
+
+      for pais in paises:
+        archivo.write(formatear_fila(
+          str(pais["nombre"]),
+          str(pais["poblacion"]),
+          str(pais["superficie"]),
+          str(pais["continente"])
+        ))
+
     print(f"Datos guardados correctamente en '{ruta_archivo}'")
   except Exception as e:
     print(f"ERROR no se pudo guardar el archivo: {e}")
+
 
 # --------- #
 
