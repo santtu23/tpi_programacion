@@ -200,7 +200,7 @@ def agregar_pais(paises):
       print(f"{VERDE}Superficie ingresada correctamente{RESET}")
       break
 
-  continente = validar_continente("Ingrese el continente del pais:", "Continente ingresado correctamente")
+  continente = validar_continente("Ingrese el continente del pais: ", "Continente ingresado correctamente")
 
   paises.append({
       "nombre": nombre.capitalize(),
